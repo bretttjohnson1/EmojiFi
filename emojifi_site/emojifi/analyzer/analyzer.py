@@ -3,6 +3,7 @@ from functools import lru_cache
 import re
 import os
 import string
+from emojisearch import search
 
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 
@@ -51,7 +52,7 @@ def _emojifi_word(word, stopwords):
 
     if word not in stopwords and not _has_numbers(word):
         stripped_word = word.translate(str.maketrans('', '', string.punctuation))
-        display_code = word_to_display_code(stripped_word)
+        display_code = search_emoji(stripped_word)
 
         if display_code:
             emoji = display_code
@@ -72,6 +73,14 @@ def word_to_display_code(word):
         return _plaintext_hex_to_unicode(results[0]["Code"].split(' ')[0])
 
     return None
+
+
+def search_emoji(word):
+    results = search(word)
+    if results:
+        return _plaintext_hex_to_unicode(results[0]["title"])
+    else:
+        return None
 
 
 def _plaintext_hex_to_unicode(code):
