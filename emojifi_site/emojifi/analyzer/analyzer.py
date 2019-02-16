@@ -13,6 +13,7 @@ STOPWORD_PATH = 'stopwords.txt'
 PRE_URL = "https://emojifinder.com/ajax.php?action=search&query="
 POST_URL = "&fbclid=IwAR2ISsQB4n2lkpYeyfKgtGGa2Yhj-xQS_0uu8WJ3Bqa7wZNQl6hj_a6CF5w"
 SUBSTRING_TO_EMOJI = {
+    'ea': '00C6',
     'ae': '00C6',
     'ab': '1F18E',
     'cl': '1F191',
