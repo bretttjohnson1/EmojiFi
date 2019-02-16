@@ -3,9 +3,6 @@ import requests
 
 reddit = praw.Reddit('bot')
 
-r = requests.get('127.0.0.1')
-r.json()
-
 for item in reddit.inbox.unread(limit=None):
 	subject = item.subject.lower()
 	if subject == 'username mention' and isinstance(item, praw.models.Comment):
