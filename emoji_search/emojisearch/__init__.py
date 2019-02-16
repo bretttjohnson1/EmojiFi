@@ -1,1 +1,1 @@
-from ._search import search as search
+from ._search import exhaustive_search as search

@@ -3,7 +3,7 @@ from functools import lru_cache
 import re
 import os
 import string
-from emoji_search import search
+from emojisearch import search
 
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 
@@ -76,7 +76,7 @@ def word_to_display_code(word):
 
 
 def search_emoji(word):
-    results = search(word+'*')
+    results = search(word)
     if results:
         return _plaintext_hex_to_unicode(results[0]["title"])
     else:
