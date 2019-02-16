@@ -9,7 +9,7 @@ for item in reddit.inbox.unread(limit=None):
 		parent = item.parent()
 		payload = {'text': parent.body(),
 				   'type': 'search'}
-		r = requests.post('127.0.0.1', data=None, json=payload)
+		requests.post('127.0.0.1', data=None, json=payload)
 		r = requests.get('127.0.0.1')
 		payload = r.json()
 		reply = item.reply(payload['text'] + '/n /n ^I am a bot. I was made by /u/HotBrass.')
