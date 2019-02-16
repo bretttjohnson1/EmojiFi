@@ -14,6 +14,7 @@ def create_index():
         title=TEXT(stored=True),
         content=TEXT,
         textdata=TEXT(stored=True),
+        emoji_title=TEXT(stored=True),
     )
 
     if not os.path.exists(INDEX_DIR):
@@ -30,12 +31,15 @@ def create_index():
             print(file_name)
             base_name = os.path.basename(file_name)
             file_content = ''.join(file.readlines())
+            emoji_name, emoji_desc = file_content.split(';')
             print('title', base_name)
-            print('content', file_content)
+            print('content', emoji_desc)
+            print('emoji_title', emoji_name)
             writer.add_document(
                 title=str(base_name),
-                content=file_content,
-                textdata=file_content,
+                content=emoji_desc,
+                textdata=emoji_desc,
+                emoji_title=emoji_name,
             )
 
     writer.commit()
