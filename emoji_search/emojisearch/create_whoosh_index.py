@@ -3,10 +3,16 @@ from os import listdir
 from os.path import isfile, join
 from whoosh import index
 from whoosh.fields import Schema, TEXT, ID
+import nltk
+from nltk.stem import WordNetLemmatizer
 
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 INDEX_DIR = join(BASE_PATH, 'index_directory')
 FILES_DIR = join(BASE_PATH, 'emoji_search_files')
+
+
+# NLTK path pointing
+nltk.data.path.append(os.path.join('emojifi_site', 'emojifi', 'analyzer', 'nltkdata'))
 
 
 def create_index():
@@ -31,7 +37,13 @@ def create_index():
             print(file_name)
             base_name = os.path.basename(file_name)
             file_content = ''.join(file.readlines())
+
             emoji_name, emoji_desc = file_content.split(';')
+
+            # NLTK lemmatize the name and description, since we lem the input word in analyzer
+            emoji_name = WordNetLemmatizer().lemmatize(emoji_name, pos='v')
+            emoji_desc = ' '.join([WordNetLemmatizer().lemmatize(w, pos='v') for w in emoji_desc.split()])
+
             print('title', base_name)
             print('content', emoji_desc)
             print('emoji_title', emoji_name)
