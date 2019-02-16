@@ -18,7 +18,7 @@ def dispatch_request(request: HttpRequest):
         dispatch_func = TYPE_TO_DISPATCH_FUNC[json_request['type']]
         obj = EmojifiCompositon(text, dispatch_func)
     else:
-        obj = EmojifiCompositon(text, emojifi_text_by_clap)
+        obj = EmojifiCompositon(text, emojifi_text_by_search)
 
     return _emojifi(obj)
 
