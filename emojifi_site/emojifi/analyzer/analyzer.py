@@ -14,7 +14,6 @@ POST_URL = "&fbclid=IwAR2ISsQB4n2lkpYeyfKgtGGa2Yhj-xQS_0uu8WJ3Bqa7wZNQl6hj_a6CF5
 LETTER_TO_EMOJI = {
     'a': '1F170',
     'b': '1F171',
-    'i': '2130',
     'm': '24C2',
     'o': '1F17E',
     'p': '1F17F',
