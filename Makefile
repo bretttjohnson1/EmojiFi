@@ -1,5 +1,14 @@
 SHELL:=/bin/bash
 PROJECT:=code_chain
+
+install-all: install nltk migrate
+
+run-aws:
+	( \
+		source venv/bin/activate; \
+		python emojifi_site/manage.py runserver 0:80; \
+	)
+
 run:
 	( \
 		source venv/bin/activate; \
@@ -25,12 +34,8 @@ install:
 	)
 
 nltk:
-	python -m nltk.downloader -d ./emojifi_site/emojifi/analyzer/nltkdata/ all
+	./install_nltk.bash
 
 clean:
 	rm -rf venv/
 	rm -rf *.egg-info
-
-pre-commit:
-	pre-commit install
-	pre-commit install-hooks
