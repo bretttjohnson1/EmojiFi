@@ -11,9 +11,18 @@ BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 STOPWORD_PATH = 'stopwords.txt'
 PRE_URL = "https://emojifinder.com/ajax.php?action=search&query="
 POST_URL = "&fbclid=IwAR2ISsQB4n2lkpYeyfKgtGGa2Yhj-xQS_0uu8WJ3Bqa7wZNQl6hj_a6CF5w"
+SUBSTRING_TO_EMOJI = {
+    'ae': '00C6',
+    'ab': '1F18E',
+    'cl': '1F191',
+    'cool': '1F192',
+    'ok': '1F197',
+    'ng': '1F196',
+}
 LETTER_TO_EMOJI = {
     'a': '1F170',
     'b': '1F171',
+    'c': '1F172',
     'm': '24C2',
     'o': '1F17E',
     'p': '1F17F',
@@ -67,8 +76,12 @@ def memeifi_text(text):
 
 
 def _memeifi_word(word):
+    wordy = word
     result = []
-    for c in word:
+    for ss in SUBSTRING_TO_EMOJI:
+        wordy = wordy.replace(ss, _plaintext_hex_to_unicode(SUBSTRING_TO_EMOJI[ss]))
+
+    for c in wordy:
         if c in LETTER_TO_EMOJI:
             result.append(_plaintext_hex_to_unicode(LETTER_TO_EMOJI[c]))
         else:
