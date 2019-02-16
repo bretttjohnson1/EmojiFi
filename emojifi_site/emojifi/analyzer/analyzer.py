@@ -11,6 +11,15 @@ BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 STOPWORD_PATH = 'stopwords.txt'
 PRE_URL = "https://emojifinder.com/ajax.php?action=search&query="
 POST_URL = "&fbclid=IwAR2ISsQB4n2lkpYeyfKgtGGa2Yhj-xQS_0uu8WJ3Bqa7wZNQl6hj_a6CF5w"
+LETTER_TO_EMOJI = {
+    'a': '1F170',
+    'b': '1F171',
+    'i': '2130',
+    'm': '24C2',
+    'o': '1F17E',
+    'p': '1F17F',
+    'x': '274E',
+}
 
 
 @lru_cache(maxsize=1)
@@ -46,6 +55,26 @@ def emojifi_text(text):
 def clappifi_text(text):
     """ Emojifies text by inserting claps around every word """
     return emoji.emojize(' :clap: ', use_aliases=True).join(text.split())
+
+
+def memeifi_text(text):
+    """ Emojifies text by inserting emojis around valid words """
+    result = []
+
+    for word in next_word(text):
+        result.append(_memeifi_word(word))
+
+    return ' '.join(result)
+
+
+def _memeifi_word(word):
+    result = []
+    for c in word:
+        if c in LETTER_TO_EMOJI:
+            result.append(_plaintext_hex_to_unicode(LETTER_TO_EMOJI[c]))
+        else:
+            result.append(c)
+    return ''.join(result)
 
 
 def _has_numbers(inputString):
