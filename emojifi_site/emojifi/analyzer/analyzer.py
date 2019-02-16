@@ -1,7 +1,10 @@
+import requests
 from functools import lru_cache
 
 
 STOPWORD_PATH = 'stopwords.txt'
+PRE_URL = "https://emojifinder.com/ajax.php?action=search&query="
+POST_URL = "&fbclid=IwAR2ISsQB4n2lkpYeyfKgtGGa2Yhj-xQS_0uu8WJ3Bqa7wZNQl6hj_a6CF5w"
 
 
 @lru_cache(maxsize=1)
@@ -38,6 +41,19 @@ def _emojifi_word(word, stopwords):
     """ Returns a word concat with an emoji if the word requires one """
     emoji = ''
     if word not in stopwords and word.isalpha():
-        emoji = '[emoji]'
+        display_code = word_to_display_code(word)
 
-    return word + emoji
+        if display_code:
+            emoji = display_code
+
+    return word + ' ' + emoji + ' '
+
+
+def word_to_display_code(word):
+    """ Returns the emoji display code of a word, or None, from the API call """
+    try:
+        url = PRE_URL + word + POST_URL
+        emoji_data = requests.get(url).json()
+        return emoji_data["results"][0]["display_code"]
+    except Exception:
+        return None
