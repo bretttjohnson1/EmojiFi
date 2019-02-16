@@ -1,0 +1,11 @@
+venv
+__pycache__
+.pytest_cache/
+.tox
+.mypy_cache/
+*.egg-info/
+.coverage
+.ropeproject/
+*.pyc
+.directory
+*.sqlite3
