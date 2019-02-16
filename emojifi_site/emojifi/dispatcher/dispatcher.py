@@ -1,10 +1,12 @@
 import json
 from ..analyzer.analyzer import emojifi_text as emojifi_text_by_search
 from ..analyzer.analyzer import clappifi_text as emojifi_text_by_clap
+from ..analyzer.analyzer import memeifi_text as emojifi_text_by_meme
 
 TYPE_TO_DISPATCH_FUNC = {
+    'search': emojifi_text_by_search,
     'clap': emojifi_text_by_clap,
-    'search': emojifi_text_by_clap,
+    'meme': emojifi_text_by_meme,
 }
 
 
