@@ -1,11 +1,11 @@
 import json
 from django.http import HttpRequest
-from ..analyzer.analyzer import emojifi_text as emojify_text_by_search
-from ..analyzer.analyzer import clappifi_text
+from ..analyzer.analyzer import emojifi_text as emojifi_text_by_search
+from ..analyzer.analyzer import clappifi_text as emojifi_text_by_clap
 
-type_to_dispatch_func = {
-    'clap': clappifi_text,
-    'search': emojify_text_by_search,
+TYPE_TO_DISPATCH_FUNC = {
+    'clap': emojifi_text_by_clap,
+    'search': emojifi_text_by_clap,
 }
 
 
@@ -15,10 +15,10 @@ def dispatch_request(request: HttpRequest):
     text = json_request['text']
 
     if 'type' in json_request:
-        dispatch_func = type_to_dispatch_func[json_request['type']]
+        dispatch_func = TYPE_TO_DISPATCH_FUNC[json_request['type']]
         obj = EmojifiCompositon(text, dispatch_func)
     else:
-        obj = EmojifiCompositon(text, emojify_text_by_search)
+        obj = EmojifiCompositon(text, emojifi_text_by_clap)
 
     return _emojifi(obj)
 
