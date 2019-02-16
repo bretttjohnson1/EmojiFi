@@ -20,13 +20,14 @@ stop_words = load_stopwords()
 
 
 html_files = [join(mypath, f) for f in listdir(mypath) if isfile(join(mypath, f))]
-
+count = 0
 for html_file in html_files:
 
     with open(html_file, 'r') as f:
         soup = BeautifulSoup(f, features="html5lib")
-
-    for entry in soup.body.find_all(text=True):
+    for entry, name_html in zip(soup.body.find_all(text=True), soup.body.find_all('b')):
+        name = name_html.text.lower()
+        name = ' '.join(filter(lambda x: x not in stop_words, name.split(' ')))
         cleaned = entry.strip()
         if 'U+' in cleaned:
             desc, unicode = cleaned.split('\n')
@@ -49,6 +50,7 @@ for html_file in html_files:
             output_file_path = join(BASE_PATH, f'emoji_search_files/{unicode}')
             if not os.path.exists(output_file_path):
                 with open(output_file_path, 'w') as emoji_file:
-                    emoji_file.write(' '.join(desc_list))
-                print(unicode, '#', ','.join(desc_list))
-#find_all(text=True).split('\n'))
+                    emoji_file.write(name+';'+' '.join(desc_list))
+                    print(unicode, '#', name, '#', ','.join(desc_list))
+            count += 1
+print(count,'files')
