@@ -1,3 +1,4 @@
+praw.ini
 venv
 __pycache__
 .pytest_cache/
@@ -9,3 +10,4 @@ __pycache__
 *.pyc
 .directory
 *.sqlite3
+.idea/
