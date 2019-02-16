@@ -16,6 +16,7 @@ def index(request: HttpRequest):
 
 @csrf_exempt
 def emojifi(request: HttpRequest):
+    print(request.body)
     if request.method == 'POST':
         return HttpResponse(
             json.dumps({
@@ -29,7 +30,7 @@ def emojifi(request: HttpRequest):
 def emojifi_types(request: HttpRequest):
     return HttpResponse(
         json.dumps({
-            'types': TYPE_TO_DISPATCH_FUNC.keys()
+            'types': list(TYPE_TO_DISPATCH_FUNC.keys())
         }),
         content_type='application/json',
     )
