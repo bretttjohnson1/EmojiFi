@@ -1,5 +1,6 @@
 praw.ini
 venv
+*nltkdata/
 __pycache__
 .pytest_cache/
 .tox
