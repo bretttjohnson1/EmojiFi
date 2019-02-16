@@ -18,6 +18,9 @@ install:
 		pip install -r requirements.txt; \
 		pip install -e emoji_search/ \
 	)
+
+nltk: python -m nltk.downloader -d ./emojifi_site/emojifi/analyzer/nltkdata/ all
+
 clean:
 	rm -rf venv/
 	rm -rf *.egg-info
