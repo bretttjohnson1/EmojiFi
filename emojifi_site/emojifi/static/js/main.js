@@ -30,6 +30,9 @@ function addTypeSelectOptions(response){
 $('#maintextbox').on('input',function(e){
     sendText();
 });
+$('#typeselector').on('change', function() {
+   sendText(); 
+ });
 $.ajax({
   method: "GET",
   url: "/emojifi_types",
