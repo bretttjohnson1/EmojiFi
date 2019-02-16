@@ -9,4 +9,3 @@ __pycache__
 *.pyc
 .directory
 *.sqlite3
-.idea/
