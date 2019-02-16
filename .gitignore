@@ -1,5 +1,5 @@
 venv
-.*/nltkdata/*
+*nltkdata/
 __pycache__
 .pytest_cache/
 .tox
