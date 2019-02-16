@@ -16,7 +16,7 @@ install:
 	( \
 		source venv/bin/activate; \
 		pip install -r requirements.txt; \
-		pip install emoji_search/ \
+		pip install -e emoji_search/ \
 	)
 clean:
 	rm -rf venv/

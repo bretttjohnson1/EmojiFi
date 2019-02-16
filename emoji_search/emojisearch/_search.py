@@ -1,6 +1,6 @@
 from whoosh import index
 from whoosh import qparser
-from create_whoosh_index import INDEX_DIR
+from .create_whoosh_index import INDEX_DIR
 
 
 def search(search_string):
