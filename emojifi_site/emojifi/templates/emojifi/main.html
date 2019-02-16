@@ -2,17 +2,43 @@
 
 <!DOCTYPE html>
 <html>
-<link rel="stylesheet" href="{% static "css/site.css" %}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<body>
-<form id="maintextform">
-<input class="large" id="maintextbox" type="text" name="text" value=""><br>
-</form>
+<body bgcolor="#E6E6FA">
+  <div class="container">
+    <div class="row" style="padding-top: 20px;">
+    </div>
+    <div class="row">
+      <div class="col">
+        <h1 class="title">EmojiFi</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm">
+      </div>
+      <div class="col-10">
+      <input class="large" id="maintextbox" type="text" name="text" value=""><br>
+      </div>
+      <div class="col-sm">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm">
+      </div>
+      <div class="col-10">
+        <div id='textresult'>
+        </div>
+      </div>
+      <div class="col-sm">
+      </div>
+    </div>
+  </div>
 
-<button onclick="sendText()">Click me</button>
-<p id="response_field"></p>
+
+
 </body>
+<link rel="stylesheet" href="{% static "css/site.css" %}">
+
 <script type="text/javascript" src="{% static "js/main.js" %}"></script>
 </html>

@@ -1,7 +1,12 @@
 var currentEndpoint = "/clapifi"
 
 function updateResponseField(response){
-  $("#response_field").text(response.text)
+  $("#textresult").text(response.text)
+  if (response.text == ""){
+    $("#textresult").css("padding", "0px")
+  }else{
+    $("#textresult").css("padding", "20px")
+  }
 }
 function sendText(){
   var textToSend = $("#maintextbox").val();
@@ -13,8 +18,6 @@ function sendText(){
 	}).done(updateResponseField)
 }
 
-$('#maintextform').submit(function () {
- //e.preventDefault();
-  sendText();
-  return false;
+$('#maintextbox').on('input',function(e){
+    sendText();
 });

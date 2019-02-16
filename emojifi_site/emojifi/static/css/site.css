@@ -1,10 +1,29 @@
-input[type=text] {
-  padding: 6px;
-  margin-top: 8px;
-  margin-right: 16px;
-  font-size: 26px;
+body {
+  background-color: #1C2329;
 }
 
+input[type=text] {
+  margin-bottom: 20px;
+  padding: 20px;
+  width: 100%;
+  border: none;
+
+  font-size: 26px;
+}
+.title{
+  text-align: center;
+}
+.textresultbox {
+  background-color: #4CAF50;
+}
+button {
+  border: none;
+  background-color: #4CAF50;
+}
+button.searchbutton{
+  margin: 20px;
+  padding: 20px;
+}
 h1 {
   color: #ffffff;
   font-family: 'Lato', sans-serif;
@@ -17,11 +36,15 @@ h1 {
 p {
   color: #adb7bd;
   font-family: 'Lucida Sans', Arial, sans-serif;
-  font-size: 16px;
+  font-size: 22px;
   line-height: 26px;
   text-indent: 30px;
-  margin: 0;
 }
+#textresult{
+  color: #000000;
+  background-color: #ffffff;
+}
+
 
 a {
   color: #fe921f;
