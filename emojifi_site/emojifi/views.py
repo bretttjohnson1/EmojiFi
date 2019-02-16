@@ -1,6 +1,7 @@
 import json
 import itertools
 import emoji
+from .analyzer.analyzer import emojifi_text
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -13,14 +14,13 @@ def index(request: HttpRequest):
 
 
 @csrf_exempt
-def clapifi(request: HttpRequest):
+def emojifi(request: HttpRequest):
     if request.method == 'POST':
         print(request.body.decode('utf-8'))
         original_text: str = json.loads(request.body.decode('utf-8'))['text']
-        word_list = original_text.split(' ')
         return HttpResponse(
             json.dumps({
-                'text': emoji.emojize(' :clap: ', use_aliases=True).join(word_list)
+                'text': emojifi_text(original_text),
             }),
             content_type='application/json',
         )

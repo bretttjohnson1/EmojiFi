@@ -1,4 +1,4 @@
-var currentEndpoint = "/clapifi"
+var currentEndpoint = "/emojifi"
 
 function updateResponseField(response){
   $("#textresult").text(response.text)

@@ -1,6 +1,8 @@
 import requests
 from functools import lru_cache
+import os
 
+BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 
 STOPWORD_PATH = 'stopwords.txt'
 PRE_URL = "https://emojifinder.com/ajax.php?action=search&query="
@@ -10,7 +12,7 @@ POST_URL = "&fbclid=IwAR2ISsQB4n2lkpYeyfKgtGGa2Yhj-xQS_0uu8WJ3Bqa7wZNQl6hj_a6CF5
 @lru_cache(maxsize=1)
 def load_stopwords():
     """ Reads the stopwords file and loads it into a set """
-    with open(STOPWORD_PATH) as f:
+    with open(os.path.join(BASE_PATH, STOPWORD_PATH)) as f:
         return set(f.read().splitlines())
 
 
@@ -54,6 +56,10 @@ def word_to_display_code(word):
     try:
         url = PRE_URL + word + POST_URL
         emoji_data = requests.get(url).json()
-        return emoji_data["results"][0]["display_code"]
+        return _plaintext_hex_to_unicode(emoji_data["results"][0]["Code"])
     except Exception:
         return None
+
+
+def _plaintext_hex_to_unicode(code):
+    return chr(int(code, 16))
