@@ -9,11 +9,11 @@ def dispatch_request(request: HttpRequest):
     json_request = json.loads(request.body.decode('utf-8'))
     text = json_request['text']
 
-    obj = EmojifiCompositon(text, emojifi_text)
-
-    if json_request['type']:
+    if 'type' in json_request:
         dispatch_func = _type_to_dispatch_func(json_request['type'])
         obj = EmojifiCompositon(text, dispatch_func)
+    else:
+        obj = EmojifiCompositon(text, emojifi_text)
 
     return _emojifi(obj)
 
