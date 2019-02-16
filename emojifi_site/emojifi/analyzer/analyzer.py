@@ -1,6 +1,7 @@
 import requests
 from functools import lru_cache
 import re
+import emoji
 import os
 import string
 from emojisearch import search
@@ -43,7 +44,8 @@ def emojifi_text(text):
 
 
 def clappifi_text(text):
-    pass
+    """ Emojifies text by inserting claps around every word """
+    return emoji.emojize(' :clap: ', use_aliases=True).join(text.split())
 
 
 def _has_numbers(inputString):
