@@ -4,10 +4,11 @@ import re
 import emoji
 import os
 import string
+import nltk
+from nltk.stem import WordNetLemmatizer
 from emojisearch import search
 
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
-
 STOPWORD_PATH = 'stopwords.txt'
 PRE_URL = "https://emojifinder.com/ajax.php?action=search&query="
 POST_URL = "&fbclid=IwAR2ISsQB4n2lkpYeyfKgtGGa2Yhj-xQS_0uu8WJ3Bqa7wZNQl6hj_a6CF5w"
@@ -19,6 +20,14 @@ LETTER_TO_EMOJI = {
     'p': '1F17F',
     'x': '274E',
 }
+
+# NLTK path pointing
+nltk.data.path.append(os.path.join('emojifi_site', 'emojifi', 'analyzer', 'nltkdata'))
+
+
+# Initialize the lemmer at compile time
+LEM_FUNC = WordNetLemmatizer().lemmatize
+LEM_FUNC('a', pos='v') # Forces the lemmatizer to load at start
 
 
 @lru_cache(maxsize=1)
@@ -85,7 +94,13 @@ def _emojifi_word(word, stopwords):
     emoji = ''
 
     if word not in stopwords and not _has_numbers(word):
-        stripped_word = word.translate(str.maketrans('', '', string.punctuation))
+        cpy = word
+        try:
+            cpy = LEM_FUNC(word, pos='v')
+        except Exception:
+            pass
+
+        stripped_word = cpy.translate(str.maketrans('', '', string.punctuation))
         display_code = search_emoji(stripped_word)
 
         if display_code:
