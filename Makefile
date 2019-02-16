@@ -19,7 +19,8 @@ install:
 		pip install -e emoji_search/ \
 	)
 
-nltk: python -m nltk.downloader -d ./emojifi_site/emojifi/analyzer/nltkdata/ all
+nltk:
+	python -m nltk.downloader -d ./emojifi_site/emojifi/analyzer/nltkdata/ all
 
 clean:
 	rm -rf venv/
