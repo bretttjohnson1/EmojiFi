@@ -1,11 +1,16 @@
 SHELL:=/bin/bash
 PROJECT:=code_chain
 run:
-	python emojifi_site/manage.py runserver 0:8000
+	( \
+		source venv/bin/activate; \
+		python emojifi_site/manage.py runserver 0:8000; \
+	)
 
 migrate:
-	emojifi_site/manage.py migrate
-
+	( \
+		source venv/bin/activate; \
+		emojifi_site/manage.py migrate; \
+	)
 test:
 	( \
 		source venv/bin/activate; \
