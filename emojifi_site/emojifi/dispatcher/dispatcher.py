@@ -1,5 +1,4 @@
 import json
-from django.http import HttpRequest
 from ..analyzer.analyzer import emojifi_text as emojifi_text_by_search
 from ..analyzer.analyzer import clappifi_text as emojifi_text_by_clap
 
@@ -9,7 +8,7 @@ TYPE_TO_DISPATCH_FUNC = {
 }
 
 
-def dispatch_request(request: HttpRequest):
+def dispatch_request(request):
     """ Dispatches the POST request to the appropriate analyzer functions """
     json_request = json.loads(request.body.decode('utf-8'))
     text = json_request['text']
