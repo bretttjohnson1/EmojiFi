@@ -1,10 +1,18 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" href="{% static "css/site.css" %}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <body>
+<form id="maintextform">
+<input class="large" id="maintextbox" type="text" name="text" value=""><br>
+</form>
 
-<h1>My First Heading</h1>
-
-<p>My first paragraph.</p>
-
+<button onclick="sendText()">Click me</button>
+<p id="response_field"></p>
 </body>
+<script type="text/javascript" src="{% static "js/main.js" %}"></script>
 </html>

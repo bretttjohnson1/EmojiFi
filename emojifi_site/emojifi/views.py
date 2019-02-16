@@ -15,12 +15,12 @@ def index(request: HttpRequest):
 @csrf_exempt
 def clapifi(request: HttpRequest):
     if request.method == 'POST':
-        print(str(request.body))
-        original_text: str = json.loads(request.body)['text']
+        print(request.body.decode('utf-8'))
+        original_text: str = json.loads(request.body.decode('utf-8'))['text']
         word_list = original_text.split(' ')
         return HttpResponse(
             json.dumps({
-                'text': ' clap '.join(word_list)
+                'text': emoji.emojize(' :clap: ', use_aliases=True).join(word_list)
             }),
             content_type='application/json',
         )
