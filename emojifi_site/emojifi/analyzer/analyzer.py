@@ -1,5 +1,6 @@
 import requests
 from functools import lru_cache
+import re
 import os
 
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
@@ -39,11 +40,17 @@ def emojifi_text(text):
     return ' '.join(result)
 
 
+def _has_numbers(inputString):
+    return any(char.isdigit() for char in inputString)
+
+
 def _emojifi_word(word, stopwords):
     """ Returns a word concat with an emoji if the word requires one """
     emoji = ''
-    if word not in stopwords and word.isalpha():
-        display_code = word_to_display_code(word)
+
+    if word not in stopwords and not _has_numbers(word):
+        stripped_word = re.sub(r'[^\w\s]', '', word)
+        display_code = word_to_display_code(stripped_word)
 
         if display_code:
             emoji = display_code
@@ -53,12 +60,14 @@ def _emojifi_word(word, stopwords):
 
 def word_to_display_code(word):
     """ Returns the emoji display code of a word, or None, from the API call """
-    try:
-        url = PRE_URL + word + POST_URL
-        emoji_data = requests.get(url).json()
-        return _plaintext_hex_to_unicode(emoji_data["results"][0]["Code"])
-    except Exception:
-        return None
+    url = PRE_URL + word + POST_URL
+    emoji_data = requests.get(url).json()
+    results = emoji_data["results"]
+
+    if results:
+        return _plaintext_hex_to_unicode(results[0]["Code"])
+
+    return None
 
 
 def _plaintext_hex_to_unicode(code):
