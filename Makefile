@@ -1,7 +1,7 @@
 SHELL:=/bin/bash
 PROJECT:=code_chain
 run:
-	emojifi_site/manage.py runserver 0:8000
+	python emojifi_site/manage.py runserver 0:8000
 
 migrate:
 	emojifi_site/manage.py migrate
@@ -9,13 +9,14 @@ migrate:
 test:
 	( \
 		source venv/bin/activate; \
-		tox; \
+		pytest emojifi_site/emojifi
 	)
 install:
 	python3.6 -m venv venv
 	( \
 		source venv/bin/activate; \
 		pip install -r requirements.txt; \
+		pip install emoji_search/ \
 	)
 clean:
 	rm -rf venv/

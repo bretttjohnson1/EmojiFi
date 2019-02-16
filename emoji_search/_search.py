@@ -1,6 +1,4 @@
-# user/bin/env python
 from whoosh import index
-import sys
 from whoosh import qparser
 from create_whoosh_index import INDEX_DIR
 
@@ -12,9 +10,4 @@ def search(search_string):
     query_parser.add_plugin(qparser.PrefixPlugin())
     query_parser.add_plugin(qparser.FuzzyTermPlugin())
     results = searcher.search(query_parser.parse(search_string), limit=10)
-    for result in results:
-        print(result)
-
-
-if __name__ == '__main__':
-    search(' '.join(sys.argv[1:]))
+    return [dict(result) for result in results]
