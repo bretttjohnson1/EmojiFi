@@ -2,6 +2,7 @@ import json
 import itertools
 import emoji
 from .dispatcher.dispatcher import dispatch_request
+from .dispatcher.dispatcher import TYPE_TO_DISPATCH_FUNC
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -15,6 +16,7 @@ def index(request: HttpRequest):
 
 @csrf_exempt
 def emojifi(request: HttpRequest):
+    print(request.body)
     if request.method == 'POST':
         return HttpResponse(
             json.dumps({
@@ -23,3 +25,12 @@ def emojifi(request: HttpRequest):
             content_type='application/json',
         )
     return HttpResponse(status=403)
+
+
+def emojifi_types(request: HttpRequest):
+    return HttpResponse(
+        json.dumps({
+            'types': list(TYPE_TO_DISPATCH_FUNC.keys())
+        }),
+        content_type='application/json',
+    )

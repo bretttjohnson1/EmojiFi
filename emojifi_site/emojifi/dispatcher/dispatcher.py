@@ -1,34 +1,31 @@
 import json
-from django.http import HttpRequest
-from ..analyzer.analyzer import emojifi_text as emojify_text_by_search
-from ..analyzer.analyzer import clappifi_text
+from ..analyzer.analyzer import emojifi_text as emojifi_text_by_search
+from ..analyzer.analyzer import clappifi_text as emojifi_text_by_clap
+from ..analyzer.analyzer import memeifi_text as emojifi_text_by_meme
+
+TYPE_TO_DISPATCH_FUNC = {
+    'search': emojifi_text_by_search,
+    'clap': emojifi_text_by_clap,
+    'meme': emojifi_text_by_meme,
+}
 
 
-def dispatch_request(request: HttpRequest):
+def dispatch_request(request):
     """ Dispatches the POST request to the appropriate analyzer functions """
     json_request = json.loads(request.body.decode('utf-8'))
     text = json_request['text']
 
     if 'type' in json_request:
-        dispatch_func = _type_to_dispatch_func(json_request['type'])
+        dispatch_func = TYPE_TO_DISPATCH_FUNC[json_request['type']]
         obj = EmojifiCompositon(text, dispatch_func)
     else:
-        obj = EmojifiCompositon(text, emojify_text_by_search)
+        obj = EmojifiCompositon(text, emojifi_text_by_search)
 
     return _emojifi(obj)
 
 
 def _emojifi(obj):
     return obj.dispatch_func(obj.text)
-
-
-def _type_to_dispatch_func(type_as_str):
-    switch = {
-        'clap': clappifi_text,
-        'search': emojify_text_by_search,
-    }
-
-    return switch['type']
 
 
 class EmojifiCompositon:
