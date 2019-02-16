@@ -42,6 +42,10 @@ def emojifi_text(text):
     return ' '.join(result)
 
 
+def clappifi_text(text):
+    pass
+
+
 def _has_numbers(inputString):
     return any(char.isdigit() for char in inputString)
 

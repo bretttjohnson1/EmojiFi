@@ -1,7 +1,7 @@
 import json
 import itertools
 import emoji
-from .analyzer.analyzer import emojifi_text
+from .dispatcher.dispatcher import dispatch_request
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -16,11 +16,9 @@ def index(request: HttpRequest):
 @csrf_exempt
 def emojifi(request: HttpRequest):
     if request.method == 'POST':
-        print(request.body.decode('utf-8'))
-        original_text: str = json.loads(request.body.decode('utf-8'))['text']
         return HttpResponse(
             json.dumps({
-                'text': emojifi_text(original_text),
+                'text': dispatch_request(request)
             }),
             content_type='application/json',
         )
