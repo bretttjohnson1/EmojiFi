@@ -3,3 +3,5 @@ pytz==2018.9
 emoji==0.5.1
 requests
 bs4
+html5lib
+whoosh
