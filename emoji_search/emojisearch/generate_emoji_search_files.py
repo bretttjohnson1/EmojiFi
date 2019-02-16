@@ -25,9 +25,8 @@ for html_file in html_files:
 
     with open(html_file, 'r') as f:
         soup = BeautifulSoup(f, features="html5lib")
-    for entry, name_html in zip(soup.body.find_all(text=True), soup.body.find_all('b')):
-        name = name_html.text.lower()
-        name = ' '.join(filter(lambda x: x not in stop_words, name.split(' ')))
+    html_names = soup.body.find_all('b')
+    for entry in soup.body.find_all(text=True):
         cleaned = entry.strip()
         if 'U+' in cleaned:
             desc, unicode = cleaned.split('\n')
@@ -46,6 +45,9 @@ for html_file in html_files:
                 lambda word: word not in stop_words,
                 desc_list
             ))
+
+            name = html_names.pop(0).text.lower()
+            name = ' '.join(filter(lambda x: x not in stop_words, name.split(' ')))
 
             output_file_path = join(BASE_PATH, f'emoji_search_files/{unicode}')
             if not os.path.exists(output_file_path):

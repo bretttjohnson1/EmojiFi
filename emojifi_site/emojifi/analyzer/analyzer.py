@@ -112,7 +112,7 @@ def word_to_display_code(word):
 def search_emoji(word):
     results = search(word)
     if results:
-        return _plaintext_hex_to_unicode(results[0]["title"])
+        return _plaintext_hex_to_unicode(results["title"])
     else:
         return None
 

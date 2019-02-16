@@ -6,11 +6,11 @@ from .create_whoosh_index import INDEX_DIR
 def exhaustive_search(search_string):
     title_search_result = _search_query(search_string, search_on='title')
     if title_search_result:
-        return title_search_result
+        return title_search_result[0]
 
     content_search_result = _search_query(search_string, search_on='content')
     if content_search_result:
-        return content_search_result
+        return content_search_result[0]
     return {}
 
 
