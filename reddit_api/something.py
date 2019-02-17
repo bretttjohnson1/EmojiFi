@@ -14,4 +14,3 @@ for item in reddit.inbox.unread(limit=None):
 		payload = r.json()
 		reply = item.reply(payload['text'] + '/n /n ^I am a bot. I was made by /u/HotBrass.')
 		item.mark_read()
-		i am a TOOOOOOM
