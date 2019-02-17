@@ -5,6 +5,8 @@ import emoji
 import os
 import string
 import nltk
+import random
+import numpy as np
 from nltk.stem import WordNetLemmatizer
 from emojisearch import search
 
@@ -104,8 +106,8 @@ def _has_numbers(inputString):
 
 def _emojifi_word(word, stopwords):
     """ Returns a word concat with an emoji if the word requires one """
-    emoji = ''
 
+    emojis = ''
     if word not in stopwords and not _has_numbers(word):
         cpy = word
         try:
@@ -114,12 +116,10 @@ def _emojifi_word(word, stopwords):
             pass
 
         stripped_word = cpy.translate(str.maketrans('', '', string.punctuation))
-        display_code = search_emoji(stripped_word)
 
-        if display_code:
-            emoji = display_code
+        emojis = search_emoji(stripped_word) or ''
 
-    return word + ' ' + emoji + ' '
+    return word + ' ' + emojis + ' '
 
 
 def word_to_display_code(word):
@@ -137,10 +137,21 @@ def word_to_display_code(word):
     return None
 
 
+def emojis_collected():
+    return 1 + np.random.poisson(1)
+
+
+def emojis_repeated():
+    return 1 + np.random.poisson(.5)
+
+
 def search_emoji(word):
     results = search(word)
     if results:
-        return _plaintext_hex_to_unicode(results["title"])
+        return ''.join(
+            _plaintext_hex_to_unicode(result["title"]) * emojis_repeated()
+            for result in results[:emojis_collected()]
+        )
     else:
         return None
 

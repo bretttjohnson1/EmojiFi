@@ -7,3 +7,4 @@ html5lib
 whoosh
 praw
 nltk
+numpy
