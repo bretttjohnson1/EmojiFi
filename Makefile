@@ -6,13 +6,13 @@ install-all: install nltk migrate
 run-aws:
 	( \
 		source venv/bin/activate; \
-		python emojifi_site/manage.py runserver 0:80 &>/dev/null &; \
+		python emojifi_site/manage.py runserver 0:80; \
 	)
 
 run-bot-aws:
 	( \
 		source venv/bin/activate; \
-		python reddit_bot/redditbot.py &>/dev/null &; \
+		python reddit_bot/redditbot.py; \
 	)
 
 run:
