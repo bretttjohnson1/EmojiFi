@@ -28,6 +28,3 @@ def valid_word_to_emoji(word):
         return ''
 
     return max(freqs.items(), key=operator.itemgetter(1))[0]
-
-
-print(valid_word_to_emoji('table'))
