@@ -32,7 +32,12 @@ install:
 		pip install -r requirements.txt; \
 		pip install -e emoji_search/ \
 	)
-
+index-data:
+	( \
+		source venv/bin/activate; \
+		python emoji_search/emojisearch/generate_emoji_search_files.py; \
+		python emoji_search/emojisearch/create_whoosh_index.py; \
+	)
 nltk:
 	./install_nltk.bash
 

@@ -6,10 +6,12 @@ import os
 import string
 import nltk
 import random
+import emoji
 import numpy as np
 from nltk.stem import WordNetLemmatizer
 from emojisearch import search
 from random import randint
+from .emojifi_searcher import valid_word_to_emoji_freqs
 
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 STOPWORD_PATH = 'stopwords.txt'
@@ -81,6 +83,7 @@ def clappifi_text(text):
     """ Emojifies text by inserting claps around every word """
     return emoji.emojize(' :clap: ', use_aliases=True).join(text.split())
 
+
 def memeifi_text(text):
     """ Emojifies text by inserting emojis around valid words """
     result = []
@@ -109,21 +112,27 @@ def _has_numbers(inputString):
     return any(char.isdigit() for char in inputString)
 
 
+def clean_word(word):
+    """ Removes punctuation and lemmatizes the word if applicable """
+    try:
+        clean = LEM_FUNC(word, pos='v')
+    except Exception:
+        clean = word
+
+    return clean.translate(str.maketrans('', '', string.punctuation))
+
+
 def _emojifi_word(word, stopwords):
     """ Returns a word concat with an emoji if the word requires one """
     wordy = word
-
     emojis = ''
+
     if word not in stopwords and not _has_numbers(word):
-        cpy = word
-        try:
-            cpy = LEM_FUNC(word, pos='v')
-        except Exception:
-            pass
+        cleaned_word = clean_word(word)
+        freqs = valid_word_to_emoji_freqs(cleaned_word)
+        top_n = freqs[0:emojis_collected()]
 
-        stripped_word = cpy.translate(str.maketrans('', '', string.punctuation))
-
-        emojis = search_emoji(stripped_word) or ''
+        emojis = ''.join([emoji.emojize(x) * emojis_repeated() for x in top_n])
 
     """ Emojifies text by replacing some word's first letters with regional indicator b"""
     if word and len(word) > 0:
@@ -137,24 +146,10 @@ def beeify(word):
     for c in word:
         result.append(c)
 
-    if word[0] not in VOWELS and randint(0, 4) == 0:
+    if word[0] not in VOWELS and randint(0, 7) == 0:
         result[0] = (_plaintext_hex_to_unicode(LETTER_TO_EMOJI['b']))
 
     return ''.join(result)
-
-def word_to_display_code(word):
-    """ Returns the emoji display code of a word, or None, from the API call """
-    if not word:
-        return None
-
-    url = PRE_URL + word + POST_URL
-    emoji_data = requests.get(url).json()
-    results = emoji_data["results"]
-
-    if results:
-        return _plaintext_hex_to_unicode(results[0]["Code"].split(' ')[0])
-
-    return None
 
 
 def emojis_collected():
@@ -163,17 +158,6 @@ def emojis_collected():
 
 def emojis_repeated():
     return 1 + np.random.poisson(.30)
-
-
-def search_emoji(word):
-    results = search(word)
-    if results:
-        return ''.join(
-            _plaintext_hex_to_unicode(result["title"]) * emojis_repeated()
-            for result in results[:emojis_collected()]
-        )
-    else:
-        return None
 
 
 def _plaintext_hex_to_unicode(code):

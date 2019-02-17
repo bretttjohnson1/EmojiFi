@@ -9,10 +9,11 @@ from emojisearch import search
 nltk.data.path.append(os.path.join('emojifi_site', 'emojifi', 'analyzer', 'nltkdata'))
 
 
-def valid_word_to_emoji(word):
+def valid_word_to_emoji_freqs(word):
     """ Assumes the word has been cleaned and is valid (e.g. not a stop word) """
     similar_words = [synset.name().split('.')[0] for synset in wordnet.synsets(word)]
     freqs = dict()
+
 
     for w in similar_words:
         results = search(w)
@@ -25,6 +26,6 @@ def valid_word_to_emoji(word):
                 freqs[code] = 1
 
     if not freqs:
-        return ''
-
-    return max(freqs.items(), key=operator.itemgetter(1))[0]
+        return []
+    result = [k for k, v in sorted(freqs.items(), key=lambda x: (x[1], x[0]), reverse=True)]
+    return result
