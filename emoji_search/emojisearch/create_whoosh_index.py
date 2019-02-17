@@ -22,7 +22,7 @@ nltk.data.path.append(os.path.join('emojifi_site', 'emojifi', 'analyzer', 'nltkd
 def create_index(index_dir, files_dir):
     schema = Schema(
         title=TEXT(stored=True),
-        content=TEXT,
+        content=TEXT(stored=True),
         textdata=TEXT(stored=True),
     )
 
