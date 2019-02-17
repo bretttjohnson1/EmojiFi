@@ -12,7 +12,7 @@ run-aws:
 run-bot:
 	( \
 		source venv/bin/activate; \
-		python reddit_api/redditbot.py; \
+		python reddit_bot/redditbot.py; \
 	)
 
 run:
