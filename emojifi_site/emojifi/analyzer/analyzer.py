@@ -112,20 +112,24 @@ def _has_numbers(inputString):
     return any(char.isdigit() for char in inputString)
 
 
+def clean_word(word):
+    """ Removes punctuation and lemmatizes the word if applicable """
+    try:
+        clean = LEM_FUNC(word, pos='v')
+    except Exception:
+        clean = word
+
+    return clean.translate(str.maketrans('', '', string.punctuation))
+
+
 def _emojifi_word(word, stopwords):
     """ Returns a word concat with an emoji if the word requires one """
     wordy = word
-
     emojis = ''
-    if word not in stopwords and not _has_numbers(word):
-        cpy = word
-        try:
-            cpy = LEM_FUNC(word, pos='v')
-        except Exception:
-            pass
 
-        stripped_word = cpy.translate(str.maketrans('', '', string.punctuation))
-        freqs = valid_word_to_emoji_freqs(stripped_word)
+    if word not in stopwords and not _has_numbers(word):
+        cleaned_word = clean_word(word)
+        freqs = valid_word_to_emoji_freqs(cleaned_word)
         top_n = freqs[0:emojis_collected()]
 
         emojis = ''.join([emoji.emojize(x) for x in top_n] * emojis_repeated())
