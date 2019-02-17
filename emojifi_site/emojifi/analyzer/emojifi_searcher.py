@@ -28,5 +28,4 @@ def valid_word_to_emoji_freqs(word):
     if not freqs:
         return None
     result = [k for k, v in sorted(freqs.items(), key=lambda x: (x[1], x[0]), reverse=True)]
-    print(result)
     return result

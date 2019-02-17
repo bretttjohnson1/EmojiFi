@@ -128,7 +128,7 @@ def _emojifi_word(word, stopwords):
         freqs = valid_word_to_emoji_freqs(stripped_word)
         top_n = freqs[0:emojis_collected()]
 
-        emojis = ''.join([_plaintext_hex_to_unicode(x) for x in top_n] * emojis_repeated())
+        emojis = ''.join([emoji.emojize(x) for x in top_n] * emojis_repeated())
 
     """ Emojifies text by replacing some word's first letters with regional indicator b"""
     if word and len(word) > 0:
