@@ -132,7 +132,7 @@ def _emojifi_word(word, stopwords):
         freqs = valid_word_to_emoji_freqs(cleaned_word)
         top_n = freqs[0:emojis_collected()]
 
-        emojis = ''.join([emoji.emojize(x) for x in top_n] * emojis_repeated())
+        emojis = ''.join([emoji.emojize(x) * emojis_repeated() for x in top_n])
 
     """ Emojifies text by replacing some word's first letters with regional indicator b"""
     if word and len(word) > 0:
@@ -151,20 +151,6 @@ def beeify(word):
 
     return ''.join(result)
 
-def word_to_display_code(word):
-    """ Returns the emoji display code of a word, or None, from the API call """
-    if not word:
-        return None
-
-    url = PRE_URL + word + POST_URL
-    emoji_data = requests.get(url).json()
-    results = emoji_data["results"]
-
-    if results:
-        return _plaintext_hex_to_unicode(results[0]["Code"].split(' ')[0])
-
-    return None
-
 
 def emojis_collected():
     return 1 + np.random.poisson(.30)
@@ -172,17 +158,6 @@ def emojis_collected():
 
 def emojis_repeated():
     return 1 + np.random.poisson(.30)
-
-
-def search_emoji(word):
-    results = search(word)
-    if results:
-        return ''.join(
-            emoji.emojize((result["title"])) * emojis_repeated()
-            for result in results[:emojis_collected()]
-        )
-    else:
-        return None
 
 
 def _plaintext_hex_to_unicode(code):
