@@ -158,11 +158,11 @@ def word_to_display_code(word):
 
 
 def emojis_collected():
-    return 1 + np.random.poisson(.75)
+    return 1 + np.random.poisson(.30)
 
 
 def emojis_repeated():
-    return 1 + np.random.poisson(.25)
+    return 1 + np.random.poisson(.30)
 
 
 def search_emoji(word):
