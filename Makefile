@@ -9,6 +9,12 @@ run-aws:
 		python emojifi_site/manage.py runserver 0:80; \
 	)
 
+run-bot:
+	( \
+		source venv/bin/activate; \
+		python reddit_api/redditbot.py; \
+	)
+
 run:
 	( \
 		source venv/bin/activate; \
