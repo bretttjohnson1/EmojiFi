@@ -10,6 +10,7 @@ import emoji
 import numpy as np
 from nltk.stem import WordNetLemmatizer
 from emojisearch import search
+from random import randint
 
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 STOPWORD_PATH = 'stopwords.txt'
@@ -33,6 +34,8 @@ LETTER_TO_EMOJI = {
     'p': '1F17F',
     'x': '274E',
 }
+
+VOWELS = ['a', 'e', 'i', 'o', 'u']
 
 # NLTK path pointing
 nltk.data.path.append(os.path.join('emojifi_site', 'emojifi', 'analyzer', 'nltkdata'))
@@ -64,6 +67,8 @@ def is_valid_word(word, stopwords):
 
 def emojifi_text(text):
     """ Emojifies text by inserting emojis around valid words """
+    random.seed(5)
+    np.random.seed(5)
     result = []
     stopwords = load_stopwords()
 
@@ -76,7 +81,6 @@ def emojifi_text(text):
 def clappifi_text(text):
     """ Emojifies text by inserting claps around every word """
     return emoji.emojize(' :clap: ', use_aliases=True).join(text.split())
-
 
 def memeifi_text(text):
     """ Emojifies text by inserting emojis around valid words """
@@ -108,6 +112,7 @@ def _has_numbers(inputString):
 
 def _emojifi_word(word, stopwords):
     """ Returns a word concat with an emoji if the word requires one """
+    wordy = word
 
     emojis = ''
     if word not in stopwords and not _has_numbers(word):
@@ -121,8 +126,22 @@ def _emojifi_word(word, stopwords):
 
         emojis = search_emoji(stripped_word) or ''
 
-    return word + ' ' + emojis + ' '
+    """ Emojifies text by replacing some word's first letters with regional indicator b"""
+    if word and len(word) > 0:
+        wordy = beeify(wordy)
+    return wordy + ' ' + emojis + ' '
 
+
+def beeify(word):
+    result = []
+    """ Emojifies text by replacing some word's first letters with regional indicator b"""
+    for c in word:
+        result.append(c)
+
+    if word[0] not in VOWELS and randint(0, 4) == 0:
+        result[0] = (_plaintext_hex_to_unicode(LETTER_TO_EMOJI['b']))
+
+    return ''.join(result)
 
 def word_to_display_code(word):
     """ Returns the emoji display code of a word, or None, from the API call """
@@ -140,11 +159,11 @@ def word_to_display_code(word):
 
 
 def emojis_collected():
-    return 1 + np.random.poisson(1)
+    return 1 + np.random.poisson(.30)
 
 
 def emojis_repeated():
-    return 1 + np.random.poisson(.5)
+    return 1 + np.random.poisson(.30)
 
 
 def search_emoji(word):
