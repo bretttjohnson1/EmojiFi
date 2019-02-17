@@ -10,6 +10,7 @@ import numpy as np
 from nltk.stem import WordNetLemmatizer
 from emojisearch import search
 from random import randint
+from .emojifi_searcher import valid_word_to_emoji_freqs
 
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 STOPWORD_PATH = 'stopwords.txt'
@@ -81,6 +82,7 @@ def clappifi_text(text):
     """ Emojifies text by inserting claps around every word """
     return emoji.emojize(' :clap: ', use_aliases=True).join(text.split())
 
+
 def memeifi_text(text):
     """ Emojifies text by inserting emojis around valid words """
     result = []
@@ -122,8 +124,10 @@ def _emojifi_word(word, stopwords):
             pass
 
         stripped_word = cpy.translate(str.maketrans('', '', string.punctuation))
+        freqs = valid_word_to_emoji_freqs(stripped_word)
+        top_n = freqs[0:emojis_collected()]
 
-        emojis = search_emoji(stripped_word) or ''
+        emojis = ''.join([_plaintext_hex_to_unicode(x) for x in top_n] * emojis_repeated())
 
     """ Emojifies text by replacing some word's first letters with regional indicator b"""
     if word and len(word) > 0:
