@@ -146,7 +146,7 @@ def beeify(word):
     for c in word:
         result.append(c)
 
-    if word[0] not in VOWELS and randint(0, 4) == 0:
+    if word[0] not in VOWELS and randint(0, 7) == 0:
         result[0] = (_plaintext_hex_to_unicode(LETTER_TO_EMOJI['b']))
 
     return ''.join(result)
