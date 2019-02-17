@@ -1,3 +1,6 @@
+var last_post_time = 0;
+var scheduled = false;
+
 function updateResponseField(response){
   $("#textresult").text(response.text)
   if (response.text == ""){
@@ -7,8 +10,10 @@ function updateResponseField(response){
   }
 }
 function sendText(){
+  last_post_time = (new Date()).getTime();
   var textToSend = $("#maintextbox").val();
   var queryType = $('#typeselector').val();
+  scheduled = false;
   $.ajax({
 		method: "POST",
 		url: "/emojifi",
@@ -28,10 +33,13 @@ function addTypeSelectOptions(response){
   }
 }
 $('#maintextbox').on('input',function(e){
-    sendText();
+    if (!scheduled){
+      scheduled = true;
+      setTimeout(sendText, 500);
+    }
 });
 $('#typeselector').on('change', function() {
-   sendText(); 
+   sendText();
  });
 $.ajax({
   method: "GET",
