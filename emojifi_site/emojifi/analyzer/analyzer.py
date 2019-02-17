@@ -6,6 +6,7 @@ import os
 import string
 import nltk
 import random
+import emoji
 import numpy as np
 from nltk.stem import WordNetLemmatizer
 from emojisearch import search
@@ -150,7 +151,7 @@ def search_emoji(word):
     results = search(word)
     if results:
         return ''.join(
-            _plaintext_hex_to_unicode(result["title"]) * emojis_repeated()
+            emoji.emojize((result["title"])) * emojis_repeated()
             for result in results[:emojis_collected()]
         )
     else:

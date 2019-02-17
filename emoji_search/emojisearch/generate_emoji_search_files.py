@@ -3,11 +3,29 @@ import os
 import string
 from os import listdir
 from os.path import isfile, join
-mypath = 'html_docs'
+import json
+import shutil
+import emoji
+
+
 
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 
 STOPWORD_PATH = 'stopwords.txt'
+
+html_path = os.path.join(BASE_PATH, 'html_docs')
+
+def _plaintext_hex_to_unicode(code):
+    return chr(int(code, 16))
+
+def refresh_dir(directory):
+    if os.path.exists(join(BASE_PATH, directory)):
+        shutil.rmtree(join(BASE_PATH, directory))
+    os.mkdir(join(BASE_PATH, directory))
+
+
+refresh_dir(join(BASE_PATH, f'emoji_search_files'))
+refresh_dir(join(BASE_PATH, f'emoji_search_files_fallback'))
 
 
 def load_stopwords():
@@ -19,7 +37,7 @@ def load_stopwords():
 stop_words = load_stopwords()
 
 
-html_files = [join(mypath, f) for f in listdir(mypath) if isfile(join(mypath, f))]
+html_files = [join(html_path, f) for f in listdir(html_path) if isfile(join(html_path, f))]
 count = 0
 for html_file in html_files:
 
@@ -48,11 +66,24 @@ for html_file in html_files:
 
             name = html_names.pop(0).text.lower()
             name = ' '.join(filter(lambda x: x not in stop_words, name.split(' ')))
-
-            output_file_path = join(BASE_PATH, f'emoji_search_files/{unicode}')
+            emoji_alias = emoji.demojize(_plaintext_hex_to_unicode(unicode))
+            output_file_path = join(BASE_PATH, f'emoji_search_files_fallback/{emoji_alias}')
             if not os.path.exists(output_file_path):
                 with open(output_file_path, 'w') as emoji_file:
-                    emoji_file.write(name+';'+' '.join(desc_list))
-                    print(unicode, '#', name, '#', ','.join(desc_list))
+                    emoji_file.write(' '.join(desc_list))
+                    print(emoji_alias, '#', name, '#', ','.join(desc_list))
             count += 1
-print(count,'files')
+print(count, 'files')
+
+
+with open(join(BASE_PATH, 'emojis.json')) as f:
+    emojis_json = json.load(f)
+
+for name, data in emojis_json.items():
+    emoji_alias = emoji.demojize(data['char'])
+
+    output_file_path = join(BASE_PATH, f'emoji_search_files/{emoji_alias}')
+    if not os.path.exists(output_file_path):
+        with open(output_file_path, 'w') as emoji_file:
+            emoji_file.write(' '.join(data['keywords']))
+            print(emoji_alias, '#', name, '#', ','.join(data['keywords']))
