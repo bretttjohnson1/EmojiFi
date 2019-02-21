@@ -1,21 +1,23 @@
 SHELL:=/bin/bash
 PROJECT:=code_chain
 
-install-all: install nltk migrate
+setup-aws: install-all setup-prod
 
-run-aws:
+install-all: install nltk migrate index-data
+
+setup-prod:
 	( \
 		source venv/bin/activate; \
-		python emojifi_site/manage.py runserver 0:80; \
+		python emojifi_site/manage.py collectstatic; \
 	)
 
-run-bot-aws:
+run-bot:
 	( \
 		source venv/bin/activate; \
 		python reddit_bot/redditbot.py; \
 	)
 
-run:
+run-debug:
 	( \
 		source venv/bin/activate; \
 		python emojifi_site/manage.py runserver 0:8000; \
@@ -25,12 +27,15 @@ migrate:
 	( \
 		source venv/bin/activate; \
 		emojifi_site/manage.py migrate; \
+		python emojifi_site/manage.py collectstatic; \
 	)
+
 test:
 	( \
 		source venv/bin/activate; \
 		pytest emojifi_site/emojifi
 	)
+
 install:
 	python3.6 -m venv venv
 	( \
@@ -38,12 +43,14 @@ install:
 		pip install -r requirements.txt; \
 		pip install -e emoji_search/ \
 	)
+
 index-data:
 	( \
 		source venv/bin/activate; \
 		python emoji_search/emojisearch/generate_emoji_search_files.py; \
 		python emoji_search/emojisearch/create_whoosh_index.py; \
 	)
+
 nltk:
 	./install_nltk.bash
 

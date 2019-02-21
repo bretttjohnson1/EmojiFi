@@ -1,4 +1,0 @@
-#! /bin/bash
-
-sudo make run-aws &>/dev/null &
-make run-bot-aws &>/dev/null &
