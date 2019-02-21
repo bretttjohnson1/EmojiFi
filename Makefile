@@ -48,8 +48,8 @@ setup-aws: setup-project install-packages-aws link-configs-aws configure-permiss
 	)
 
 install-packages-aws:
+	sudo apt update
 	sudo apt-get install build-essential python3-dev -y
-	sudo apt install make -y
 	sudo apt-get install -y nginx
 	sudo apt-get install -y supervisor
 
