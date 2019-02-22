@@ -13,7 +13,7 @@ run-bot:
 	)
 
 #Sets up the full project on dev. Call setup-aws if on aws instead.
-setup-project: install-python-packages nltk migrate index-data
+setup-project: install-python-packages nltk migrate index-data collect-static
 
 install-python-packages:
 	python3.6 -m venv venv
@@ -32,6 +32,12 @@ migrate:
 		emojifi_site/manage.py migrate; \
 	)
 
+collect-static:
+	( \
+		source venv/bin/activate; \
+		python emojifi_site/manage.py collectstatic --no-input; \
+	)
+
 index-data:
 	( \
 		source venv/bin/activate; \
@@ -41,10 +47,6 @@ index-data:
 
 #Aws specific build. Should not be called in debug
 setup-aws: setup-project install-packages-aws link-configs-aws configure-permissions-aws
-	( \
-		source venv/bin/activate; \
-		python emojifi_site/manage.py collectstatic --no-input; \
-	)
 
 install-packages-aws:
 	sudo apt update

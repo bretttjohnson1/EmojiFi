@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 import os.path
 import random
+import sys
+
+IS_DEV = (len(sys.argv) > 1 and sys.argv[1] == 'runserver')
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -36,7 +40,7 @@ with open(_secret_key_path, 'r') as secret_key_file:
     SECRET_KEY = secret_key_file.read()
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = IS_DEV
 
 ALLOWED_HOSTS = ['localhost', '3.18.14.202', '.emojifythis.org', 'emojifythis.org']
 

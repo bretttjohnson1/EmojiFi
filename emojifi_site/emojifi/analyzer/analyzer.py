@@ -80,6 +80,15 @@ def clappifi_text(text):
     return emoji.emojize(' :clap: ', use_aliases=True).join(text.split())
 
 
+def radomized_case(text):
+    return text.upper() if random.randint(0, 1) else text.lower()
+
+
+def spongebobifi_text(text):
+    random.seed(5)
+    return ''.join(radomized_case(char) for char in text)
+
+
 def memeifi_text(text):
     """ Emojifies text by inserting emojis around valid words """
     result = []
