@@ -30,7 +30,7 @@ migrate:
 	( \
 		source venv/bin/activate; \
 		emojifi_site/manage.py migrate; \
-		python emojifi_site/manage.py collectstatic; \
+		python emojifi_site/manage.py collectstatic --no-input; \
 	)
 
 index-data:
