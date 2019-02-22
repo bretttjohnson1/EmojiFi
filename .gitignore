@@ -16,3 +16,4 @@ __pycache__
 *index_directory/
 *index_directory_fallback/
 emojifi_site/static/
+SECRET_KEY
