@@ -56,9 +56,9 @@ install-packages-aws:
 	sudo apt-get install -y supervisor
 
 link-configs-aws:
-	sudo ln -s /home/ubuntu/EmojiFi/config/emojifi_nginx.conf /etc/nginx/sites-enabled/
-	sudo ln -s /home/ubuntu/EmojiFi/config/emojifi_uwsgi.ini /etc/uwsgi/vassals/
-	sudo ln -s /home/ubuntu/EmojiFi/config/uwsgi_supervisord.conf /etc/supervisor/conf.d/
+	sudo ln -s -f /home/ubuntu/EmojiFi/config/emojifi_nginx.conf /etc/nginx/sites-enabled/
+	sudo ln -s -f /home/ubuntu/EmojiFi/config/emojifi_uwsgi.ini /etc/uwsgi/vassals/
+	sudo ln -s -f /home/ubuntu/EmojiFi/config/uwsgi_supervisord.conf /etc/supervisor/conf.d/
 
 configure-permissions-aws:
 	sudo chgrp -R www-data /home/ubuntu/EmojiFi/
