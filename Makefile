@@ -24,7 +24,7 @@ install-python-packages:
 	)
 
 nltk:
-	./install_nltk.bash
+	sudo ./install_nltk.bash
 
 migrate:
 	( \
