@@ -13,3 +13,5 @@ __pycache__
 *.sqlite3
 .idea/
 *emoji_search_files*
+*index_directory*
+emojifi_site/static/
