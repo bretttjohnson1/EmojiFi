@@ -57,7 +57,7 @@ install-packages-aws:
 
 link-configs-aws:
 	sudo ln -s -f /home/ubuntu/EmojiFi/config/emojifi_nginx.conf /etc/nginx/sites-enabled/
-	mkdir -p /etc/uwsgi/vassals/
+	sudo mkdir -p /etc/uwsgi/vassals/
 	sudo ln -s -f /home/ubuntu/EmojiFi/config/emojifi_uwsgi.ini /etc/uwsgi/vassals/
 	sudo ln -s -f /home/ubuntu/EmojiFi/config/uwsgi_supervisord.conf /etc/supervisor/conf.d/
 
