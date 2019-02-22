@@ -5,9 +5,6 @@ from nltk.corpus import wordnet
 from emojisearch import search
 
 
-# NLTK path pointing
-nltk.data.path.append(os.path.join('emojifi_site', 'emojifi', 'analyzer', 'nltkdata'))
-
 
 def valid_word_to_emoji_freqs(word):
     """ Assumes the word has been cleaned and is valid (e.g. not a stop word) """

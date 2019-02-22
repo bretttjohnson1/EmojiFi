@@ -6,7 +6,6 @@ import os
 import string
 import nltk
 import random
-import emoji
 import numpy as np
 from nltk.stem import WordNetLemmatizer
 from emojisearch import search
@@ -37,9 +36,6 @@ LETTER_TO_EMOJI = {
 }
 
 VOWELS = ['a', 'e', 'i', 'o', 'u']
-
-# NLTK path pointing
-nltk.data.path.append(os.path.join('emojifi_site', 'emojifi', 'analyzer', 'nltkdata'))
 
 
 # Initialize the lemmer at compile time

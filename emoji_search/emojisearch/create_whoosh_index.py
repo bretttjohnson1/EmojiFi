@@ -14,11 +14,6 @@ INDEX_DIR_FALLBACK = join(BASE_PATH, 'index_directory_fallback')
 FILES_DIR_FALLBACK = join(BASE_PATH, 'emoji_search_files_fallback')
 
 
-
-# NLTK path pointing
-nltk.data.path.append(os.path.join('emojifi_site', 'emojifi', 'analyzer', 'nltkdata'))
-
-
 def create_index(index_dir, files_dir):
     schema = Schema(
         title=TEXT(stored=True),

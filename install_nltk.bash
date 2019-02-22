@@ -1,8 +1,9 @@
 #! /usr/bin/env bash
+ntlk_dir=/usr/local/lib/nltk_data
 source venv/bin/activate
-if [ -d "./emojifi_site/emojifi/analyzer/nltkdata" ];
+if [ -d "$ntlk_dir" ];
 then
 echo "nltk is installed."
 else
-python -m nltk.downloader -d ./emojifi_site/emojifi/analyzer/nltkdata/ all
+python -m nltk.downloader -d $ntlk_dir all
 fi
