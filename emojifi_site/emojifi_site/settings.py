@@ -25,7 +25,7 @@ SECRET_KEY = 'pg(hj))ob%tfk7$uz1o_xq4l9#$nk@q)u)qls*pef)f7@ieg83'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '3.18.14.202', '.emojifythis.org']
+ALLOWED_HOSTS = ['localhost', '3.18.14.202', '.emojifythis.org', 'emojifythis.org']
 
 
 # Application definition
