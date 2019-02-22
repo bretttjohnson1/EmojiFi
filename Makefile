@@ -30,7 +30,6 @@ migrate:
 	( \
 		source venv/bin/activate; \
 		emojifi_site/manage.py migrate; \
-		python emojifi_site/manage.py collectstatic --no-input; \
 	)
 
 index-data:
@@ -44,7 +43,7 @@ index-data:
 setup-aws: setup-project install-packages-aws link-configs-aws configure-permissions-aws
 	( \
 		source venv/bin/activate; \
-		python emojifi_site/manage.py collectstatic; \
+		python emojifi_site/manage.py collectstatic --no-input; \
 	)
 
 install-packages-aws:
