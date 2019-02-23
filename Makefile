@@ -61,12 +61,12 @@ link-configs-aws:
 	sudo mkdir -p /etc/uwsgi/vassals/
 	sudo ln -s -f /home/ubuntu/EmojiFi/config/emojifi_uwsgi.ini /etc/uwsgi/vassals/
 	sudo ln -s -f /home/ubuntu/EmojiFi/config/uwsgi_supervisord.conf /etc/supervisor/conf.d/
+	sudo ln -s -f /home/ubuntu/EmojiFi/config/reddit_bot_supervisord.conf /etc/supervisor/conf.d/
 
 configure-permissions-aws:
 	sudo chgrp -R www-data /home/ubuntu/EmojiFi/
 	sudo chmod -R g+rw /home/ubuntu/EmojiFi/
 	sudo usermod -a -G www-data ubuntu
-	sudo apt-get install -y supervisor
 
 clean:
 	rm -rf venv/
