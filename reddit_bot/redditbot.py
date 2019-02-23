@@ -14,7 +14,7 @@ while True:
 					   'type': 'search'}
 			print(parent.body)
 			try:
-				r = requests.post('http://3.18.14.202:80/emojifi', data=json.dumps(payload))
+				r = requests.post('http://emojifythis.org/emojifi', data=json.dumps(payload))
 				finaltext = r.json()
 				print(finaltext['text'])
 				reply = item.reply(finaltext['text'] + '\n\n ============================= \n   I am a bot. '
