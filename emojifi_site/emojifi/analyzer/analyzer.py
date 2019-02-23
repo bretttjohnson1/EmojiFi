@@ -149,16 +149,28 @@ def _emojifi_word(word, stopwords):
 
 
 def beeify(word):
-    result = []
-    """ Emojifies text by replacing some word's first letters with regional indicator b"""
-    for c in word:
-        result.append(c)
+    """ Randomly replaces a word's first letter with the B emoji if applicable """
+    def is_beeifyable(word):
+        """ Determines if a word can be beeifyable """
+        return len(word) > 1 and word[0].lower() not in VOWELS
 
-    if word[0] not in VOWELS and randint(0, 7) == 0:
-        result[0] = (_plaintext_hex_to_unicode(LETTER_TO_EMOJI['b']))
+    def can_beeify():
+        """ Determines if the random chance to beeify has occured """
+        return randint(0, 15) == 0
 
-    return ''.join(result)
+    @lru_cache(maxsize=1)
+    def b_emoji():
+        """ Returns the B emoji """
+        return _plaintext_hex_to_unicode(LETTER_TO_EMOJI['b'])
 
+    def beeify_valid_word(word):
+        """ Beeify's a word, assuming is_beeifyable() and can_beeify() were true """
+        return ''.join([b_emoji()] + list(word[1::]))
+
+    if is_beeifyable(word) and can_beeify():
+        return beeify_valid_word(word)
+
+    return word
 
 def emojis_collected():
     return 1 + np.random.poisson(.30)
