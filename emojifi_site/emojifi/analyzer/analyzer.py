@@ -77,7 +77,10 @@ def emojifi_text(text):
 
 def clappifi_text(text):
     """ Emojifies text by inserting claps around every word """
-    return emoji.emojize(' :clap: ', use_aliases=True).join(text.split())
+    if text:
+        clap = emoji.emojize(' :clap: ', use_aliases=True)
+        return clap.join(text.split()) + clap
+    return ""
 
 
 def radomized_case(text):
