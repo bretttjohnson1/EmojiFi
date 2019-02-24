@@ -15,7 +15,7 @@ run-bot:
 test:
 	( \
 		source venv/bin/activate; \
-		pytest emoji_search/test/; \
+		pytest emoji_search/; \
 	)
 
 #Sets up the full project on dev. Call setup-aws if on aws instead.

@@ -19,7 +19,7 @@ schema = Schema(
 
 def create_index(index_dir, files_dir):
     if not os.path.exists(index_dir):
-        os.mkdir(index_dir)
+        os.makedirs(index_dir)
 
     index_writer = index.create_in(index_dir, schema).writer()
 
@@ -35,6 +35,10 @@ def create_index(index_dir, files_dir):
     index_writer.commit()
 
 
-if __name__ == '__main__':
+def create_indexes():
     create_index(INDEX_DIR, EMOJI_FILES_DIR)
     create_index(INDEX_DIR_FALLBACK, EMOJI_FILES_DIR_FALLBACK)
+
+
+if __name__ == '__main__':
+    create_indexes()

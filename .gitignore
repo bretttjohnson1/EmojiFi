@@ -12,8 +12,6 @@ __pycache__
 .directory
 *.sqlite3
 .idea/
-emoji_search/emojisearch/emoji_search_files*
-*index_directory/
-*index_directory_fallback/
+emoji_search/emojisearch/generated*
 emojifi_site/static/
 SECRET_KEY

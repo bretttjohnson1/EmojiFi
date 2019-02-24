@@ -2,7 +2,7 @@ from whoosh import index
 from whoosh import qparser
 from .create_whoosh_index import INDEX_DIR
 from .create_whoosh_index import INDEX_DIR_FALLBACK
-from emojisearch.util.word_transform import lematize_words
+from emojisearch.util.word_transform import lemmatize_words
 from emojisearch.util.word_transform import synonyms
 from emojisearch.util.cleaning import cleaned_of_punctuation
 from collections import defaultdict
@@ -11,7 +11,7 @@ from collections import defaultdict
 def search(word):
     freqs = defaultdict(int)
     word = cleaned_of_punctuation(word)
-    word = lematize_words([word])[0]
+    word = lemmatize_words([word])[0]
 
     for synonym in synonyms(word):
         results = _exhaustive_search(synonym)

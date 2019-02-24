@@ -1,5 +1,5 @@
 from emojisearch import stop_words
-from emojisearch.util.word_transform import lematize_words
+from emojisearch.util.word_transform import lemmatize_words
 from emojisearch.search_engine_setup.emoji_file import EmojiFile
 from emojisearch.util.cleaning import cleaned_of_punctuation
 from emojisearch.util.cleaning import filter_stop_words
@@ -21,7 +21,7 @@ def cleaned_description(description):
     description = cleaned_of_punctuation(description)
     description_words = filter_stop_words(description)
 
-    return ' '.join(lematize_words(description_words.split(' ')))
+    return ' '.join(lemmatize_words(description_words.split(' ')))
 
 
 def search_file_entry_generator(html_file):
