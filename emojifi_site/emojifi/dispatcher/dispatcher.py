@@ -23,4 +23,4 @@ def dispatch_request(request):
     else:
         dispatch_func = emojify_text
 
-    return dispatch_func(text)
+    return dispatch_func(text[0:1000])  # Limit to the first 1000 characters
