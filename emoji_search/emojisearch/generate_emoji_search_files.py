@@ -15,15 +15,15 @@ from emojisearch.search_engine_setup.search_file_generator.emoji_meanings import
 def delete_all_files(directory):
     if os.path.exists(directory):
         shutil.rmtree(directory)
-    os.mkdir(directory)
+    os.makedirs(directory)
 
 
 def generate_search_files():
+    for directory in [EMOJI_FILES_DIR, EMOJI_FILES_DIR_FALLBACK]:
+        delete_all_files(directory)
     generate_search_files_from_emoji_json(EMOJI_JSON_FILE, EMOJI_FILES_DIR)
     generate_search_files_from_emoji_meanings(EMOJI_MEANINGS_DIR, EMOJI_FILES_DIR_FALLBACK)
 
 
 if __name__ == '__main__':
-    for directory in [EMOJI_FILES_DIR, EMOJI_FILES_DIR_FALLBACK]:
-        delete_all_files(directory)
     generate_search_files()

@@ -6,7 +6,7 @@ from nltk.corpus import wordnet
 wordnet.ensure_loaded()
 
 
-def lematize_words(word_list):
+def lemmatize_words(word_list):
     return [WordNetLemmatizer().lemmatize(word, pos='v') for word in word_list]
 
 
