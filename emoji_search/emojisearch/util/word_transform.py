@@ -7,4 +7,4 @@ def lematize_words(word_list):
 
 
 def synonyms(word):
-    return {synset.name().split('.')[0] for synset in wordnet.synsets(word)}
+    return {lemma.name() for synset in wordnet.synsets(word) for lemma in synset.lemmas()}

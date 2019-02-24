@@ -15,15 +15,14 @@ def search(word):
 
     for synonym in synonyms(word):
         results = _exhaustive_search(synonym)
-
         for result in results:
-            freqs[result['emoji']] += 1
+            freqs[result['emoji']] += 1 if synonym == word else 1
 
     return [
         emoji
         for emoji, score in sorted(
             freqs.items(),
-            key=lambda x: (x[1], x[0]),
+            key=lambda x: (x[1], len(x[0]), x[0]),
             reverse=True
         )
     ]
