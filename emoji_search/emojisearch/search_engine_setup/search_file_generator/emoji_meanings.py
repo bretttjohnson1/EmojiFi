@@ -47,4 +47,4 @@ def generate_search_files_from_emoji_meanings(corpus_directory, emoji_file_direc
 
     for html_file in html_files:
         for emoji, description in search_file_entry_generator(html_file):
-            EmojiFile(emoji, description).write(emoji_file_directory)
+            EmojiFile(emoji, '', description).write(emoji_file_directory)
