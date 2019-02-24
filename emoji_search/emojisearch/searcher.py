@@ -2,9 +2,34 @@ from whoosh import index
 from whoosh import qparser
 from .create_whoosh_index import INDEX_DIR
 from .create_whoosh_index import INDEX_DIR_FALLBACK
+from emojisearch.util.word_transform import lematize_words
+from emojisearch.util.word_transform import synonyms
+from emojisearch.util.cleaning import cleaned_of_punctuation
+from collections import defaultdict
 
 
-def exhaustive_search(search_string):
+def search(word):
+    freqs = defaultdict(int)
+    word = cleaned_of_punctuation(word)
+    word = lematize_words([word])[0]
+
+    for synonym in synonyms(word):
+        results = _exhaustive_search(synonym)
+
+        for result in results:
+            freqs[result['emoji']] += 1
+
+    return [
+        emoji
+        for emoji, score in sorted(
+            freqs.items(),
+            key=lambda x: (x[1], x[0]),
+            reverse=True
+        )
+    ]
+
+
+def _exhaustive_search(search_string):
     search_results = _search_query(search_string, INDEX_DIR)
     if search_results:
         return search_results

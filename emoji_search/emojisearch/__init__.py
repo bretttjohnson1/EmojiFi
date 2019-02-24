@@ -1,1 +1,1 @@
-from ._search import exhaustive_search as search
+from emojisearch.searcher import search
