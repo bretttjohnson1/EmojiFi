@@ -17,3 +17,4 @@ emoji_search/emojisearch/emoji_search_files*
 *index_directory_fallback/
 emojifi_site/static/
 SECRET_KEY
+*.swp
