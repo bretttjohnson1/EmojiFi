@@ -5,7 +5,6 @@ from nltk.corpus import wordnet
 from emojisearch import search
 
 
-
 def valid_word_to_emoji_freqs(word):
     """ Assumes the word has been cleaned and is valid (e.g. not a stop word) """
     similar_words = [synset.name().split('.')[0] for synset in wordnet.synsets(word)]
