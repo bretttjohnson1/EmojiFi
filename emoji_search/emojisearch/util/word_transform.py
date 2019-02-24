@@ -2,6 +2,10 @@ from nltk.stem import WordNetLemmatizer
 from nltk.corpus import wordnet
 
 
+# Required to ensure that the corpus loads
+wordnet.ensure_loaded()
+
+
 def lemmatize_words(word_list):
     return [WordNetLemmatizer().lemmatize(word, pos='v') for word in word_list]
 

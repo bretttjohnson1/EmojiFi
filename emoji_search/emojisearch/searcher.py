@@ -11,7 +11,7 @@ from collections import defaultdict
 def search(word):
     freqs = defaultdict(int)
     word = cleaned_of_punctuation(word)
-    word = lemmatize_words([word])[0]
+    word = lemmatize_words([word.lower()])[0]
 
     for synonym in synonyms(word):
         results = _exhaustive_search(synonym)
