@@ -12,6 +12,12 @@ run-bot:
 		python reddit_bot/redditbot.py; \
 	)
 
+test:
+	( \
+		source venv/bin/activate; \
+		pytest emoji_search/test/; \
+	)
+
 #Sets up the full project on dev. Call setup-aws if on aws instead.
 setup-project: install-python-packages nltk migrate index-data collect-static
 
