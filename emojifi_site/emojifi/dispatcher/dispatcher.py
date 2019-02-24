@@ -1,15 +1,15 @@
 import json
-from ..analyzer.analyzer import emojifi_text as emojifi_text_by_search
-from ..analyzer.analyzer import clappifi_text as emojifi_text_by_clap
-from ..analyzer.analyzer import memeifi_text as emojifi_text_by_meme
-from ..analyzer.analyzer import spongebobifi_text
+
+
+from emojifi.emojifiers.clap import clappify_text
+from emojifi.emojifiers.spongebob import spongebobify_text
+from emojifi.emojifiers.emojipasta import emojify_text
 
 
 TYPE_TO_DISPATCH_FUNC = {
-    'search': emojifi_text_by_search,
-    'clap': emojifi_text_by_clap,
-    'meme': emojifi_text_by_meme,
-    'spongebob': spongebobifi_text
+    'search': emojify_text,
+    'clap': clappify_text,
+    'spongebob': spongebobify_text,
 }
 
 
@@ -20,18 +20,7 @@ def dispatch_request(request):
 
     if 'type' in json_request:
         dispatch_func = TYPE_TO_DISPATCH_FUNC[json_request['type']]
-        obj = EmojifiCompositon(text, dispatch_func)
     else:
-        obj = EmojifiCompositon(text, emojifi_text_by_search)
+        dispatch_func = emojify_text
 
-    return _emojifi(obj)
-
-
-def _emojifi(obj):
-    return obj.dispatch_func(obj.text)
-
-
-class EmojifiCompositon:
-    def __init__(self, text, dispatch_func):
-        self.text = text
-        self.dispatch_func = dispatch_func
+    return dispatch_func(text)
