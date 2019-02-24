@@ -1,5 +1,5 @@
 from emojisearch import stop_words
-from emojisearch.search_engine_setup.lematizer import lematize_words
+from emojisearch.util.word_transform import lematize_words
 from emojisearch.search_engine_setup.emoji_file import EmojiFile
 from emojisearch.util.cleaning import cleaned_of_punctuation
 from emojisearch.util.cleaning import filter_stop_words

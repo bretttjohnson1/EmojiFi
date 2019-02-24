@@ -6,8 +6,8 @@ from whoosh.fields import Schema, TEXT
 
 from emojisearch.paths import INDEX_DIR
 from emojisearch.paths import INDEX_DIR_FALLBACK
-from emoijsearch.paths import EMOJI_FILES_DIR
-from emoijsearch.paths import EMOJI_FILES_DIR_FALLBACK
+from emojisearch.paths import EMOJI_FILES_DIR
+from emojisearch.paths import EMOJI_FILES_DIR_FALLBACK
 
 from emojisearch.search_engine_setup.emoji_file import EmojiFile
 
@@ -29,7 +29,7 @@ def create_index(index_dir, files_dir):
         emoji_file = EmojiFile.read(file_path)
         index_writer.add_document(
             emoji=emoji_file.unicode_emoji,
-            content=emoji_file.description,
+            content=emoji_file.search_content,
         )
 
     index_writer.commit()
