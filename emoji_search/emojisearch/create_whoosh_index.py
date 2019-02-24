@@ -13,6 +13,7 @@ from emojisearch.search_engine_setup.emoji_file import EmojiFile
 
 schema = Schema(
     emoji=TEXT(stored=True),
+    name=TEXT(stored=True),
     content=TEXT(stored=True),
 )
 
@@ -29,6 +30,7 @@ def create_index(index_dir, files_dir):
         emoji_file = EmojiFile.read(file_path)
         index_writer.add_document(
             emoji=emoji_file.unicode_emoji,
+            name=emoji_file.name,
             content=emoji_file.search_content,
         )
 

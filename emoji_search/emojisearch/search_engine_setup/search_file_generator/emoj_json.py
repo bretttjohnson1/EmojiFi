@@ -10,4 +10,4 @@ def generate_search_files_from_emoji_json(corpus_file_path, emoji_file_directory
     for name, data in emojis_json.items():
         emoji = data['char']
         description = ' '.join(data['keywords'])
-        EmojiFile(emoji, description).write(emoji_file_directory)
+        EmojiFile(emoji, name, description).write(emoji_file_directory)
