@@ -1,1 +1,2 @@
-from ._search import exhaustive_search as search
+from emojisearch.searcher import search
+from emojisearch.util.stopwords import stop_words
