@@ -16,12 +16,13 @@ def search(word, scores=False):
     for synonym in synonyms(word):
         name_results = _exhaustive_search(synonym, 'name')
         content_results = _exhaustive_search(synonym, 'content')
-        for result, base_points in zip(name_results, reversed(range(len(name_results) + 1))):
+
+        for result, base_points in result_score_iterable(name_results):
             real_points = 3 * base_points if word == synonym else base_points
             freqs[result['emoji']] += real_points
 
-        for result in content_results:
-            freqs[result['emoji']] += 1
+        for result, base_points in result_score_iterable(content_results):
+            freqs[result['emoji']] += base_points
 
     return [
         emoji if not scores else (emoji, score)
@@ -31,6 +32,11 @@ def search(word, scores=False):
             reverse=True
         )
     ]
+
+
+def result_score_iterable(results, base=5):
+    for i in range(len(results)):
+        yield results[i], 5 / (i + 1)
 
 
 def _exhaustive_search(search_string, search_field):
