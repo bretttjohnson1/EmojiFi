@@ -42,7 +42,7 @@ def emojify_text(text):
 @lru_cache(maxsize=1000)
 def _emojify_word(word):
     """ Returns a word concat with an emoji if the word requires one """
-    if word not in stop_words() and not _has_numbers(word):
+    if word.lower() not in stop_words() and not _has_numbers(word):
         relevant_emojis = search(word)
         collected_emojis = relevant_emojis[0:emojis_collected()]
         emojis = ''.join([x * emojis_repeated() for x in collected_emojis])
