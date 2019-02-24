@@ -30,7 +30,6 @@ def is_mention(message):
     return subject == 'username mention' and isinstance(message, praw.models.Comment)
 
 
-
 def run_bot():
     while True:
         for message in reddit.inbox.unread(limit=None):
