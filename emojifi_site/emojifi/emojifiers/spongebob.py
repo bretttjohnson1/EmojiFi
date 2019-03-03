@@ -9,5 +9,4 @@ def _radomized_case(text):
 
 def spongebobify_text(text):
     """ Spongebobify's text """
-    random.seed(5)
     return ''.join(_radomized_case(char) for char in text)

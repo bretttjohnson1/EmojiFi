@@ -6,6 +6,7 @@ from emojisearch.util.word_transform import lemmatize_words
 from emojisearch.util.word_transform import synonyms
 from emojisearch.util.cleaning import cleaned_of_punctuation
 from collections import defaultdict
+import random
 
 
 def search(word, scores=False):
@@ -13,18 +14,17 @@ def search(word, scores=False):
     word = cleaned_of_punctuation(word)
     word = lemmatize_words([word.lower()])[0]
 
-    for synonym in synonyms(word):
-        name_results = _exhaustive_search(synonym, 'name')
-        content_results = _exhaustive_search(synonym, 'content')
+    name_results = _exhaustive_search(word, 'name')
+    content_results = _exhaustive_search(word, 'content')
 
-        for result, base_points in result_score_iterable(name_results):
-            real_points = 3 * base_points if word == synonym else base_points
-            freqs[result['emoji']] += real_points
+    for result, base_points in result_score_iterable(name_results):
+        real_points = 3 * base_points
+        freqs[result['emoji']] += real_points
 
-        for result, base_points in result_score_iterable(content_results):
-            freqs[result['emoji']] += base_points
+    for result, base_points in result_score_iterable(content_results):
+        freqs[result['emoji']] += base_points
 
-    return [
+    results = [
         emoji if not scores else (emoji, score)
         for emoji, score in sorted(
             freqs.items(),
@@ -32,6 +32,12 @@ def search(word, scores=False):
             reverse=True
         )
     ]
+    for i in range(len(results) - 1):
+        if random.randint(0, 3) == 0:
+            results[i], results[i + 1] = results[i + 1], results[i]
+
+    return results
+
 
 
 def result_score_iterable(results, base=5):
