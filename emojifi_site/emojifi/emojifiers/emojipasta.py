@@ -10,7 +10,7 @@ from emojisearch import stop_words
 from functools import lru_cache
 
 
-VOWELS  = {'a', 'e', 'i', 'o', 'u'}
+VOWELS = {'a', 'e', 'i', 'o', 'u'}
 B_EMOJI = emoji.emojize(':B_button_(blood_type):')
 
 
@@ -34,21 +34,22 @@ def _can_beeify():
 
 def emojify_text(text):
     """ Emojifies text by inserting emojis around valid words """
-    random.seed(5)
-    np.random.seed(5)
     return ' '.join([_emojify_word(w) for w in text.split()])
 
 
-@lru_cache(maxsize=1000)
 def _emojify_word(word):
     """ Returns a word concat with an emoji if the word requires one """
     if word.lower() not in stop_words() and not _has_numbers(word):
-        relevant_emojis = search(word)
-        collected_emojis = relevant_emojis[0:emojis_collected()]
-        emojis = ''.join([x * emojis_repeated() for x in collected_emojis])
-        return beeify(word) + ' ' + emojis + ' '
+        return beeify(word) + ' ' + _word_relevant_emojis(word) + ' '
 
-    return word  # Notice how there's no beeify(word); it looks odd.
+    return word  # Beeifying stopwords looks odd
+
+
+@lru_cache(maxsize=1000)
+def _word_relevant_emojis(word):
+    relevant_emojis = search(word)
+    collected_emojis = relevant_emojis[0:emojis_collected()]
+    return ''.join([x * emojis_repeated() for x in collected_emojis])
 
 
 def _has_numbers(text):
