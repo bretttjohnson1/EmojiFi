@@ -16,7 +16,6 @@ def index(request: HttpRequest):
 
 @csrf_exempt
 def emojifi(request: HttpRequest):
-    print(request.body)
     if request.method == 'POST':
         return HttpResponse(
             json.dumps({
