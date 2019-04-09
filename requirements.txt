@@ -10,3 +10,4 @@ whoosh
 praw
 nltk
 numpy
+python-memcached
